@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#6c5ce7">
+<title>BuildA — Building Construction Blaster</title>
+<style>
+:root{--ink:#272448;--purple:#6c5ce7;--pink:#ff78a8;--yellow:#ffd166;--mint:#74e3c1;--blue:#72c8ff;--paper:#fffdf8;--line:#e9e4ff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f8f6ff;color:var(--ink);font-family:ui-rounded,"Trebuchet MS",system-ui,sans-serif}
+button,select{font:inherit}button{cursor:pointer;border:0;font-weight:800;transition:transform .15s,filter .15s}button:hover{transform:translateY(-2px);filter:brightness(1.03)}button:focus-visible{outline:3px solid #252044;outline-offset:3px}
+.wrap{max-width:1120px;margin:auto;padding:0 22px}.nav{display:flex;justify-content:space-between;align-items:center;padding:18px 0}.brand{display:flex;gap:10px;align-items:center;font-size:1.35rem;font-weight:1000;letter-spacing:-.04em}.logo{width:42px;height:42px;border-radius:14px;background:var(--yellow);display:grid;place-items:center;font-size:24px;box-shadow:0 4px 0 #e6ad46}.nav-tag{font-size:.82rem;font-weight:800;color:#77718e;background:white;padding:9px 13px;border-radius:99px}
+.hero{display:grid;grid-template-columns:1.08fr .92fr;gap:32px;align-items:center;padding:36px 0 48px}.eyebrow{display:inline-block;background:#e9e5ff;color:#5d4ad5;padding:8px 12px;border-radius:99px;font-weight:900;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase}.hero h1{font-size:clamp(2.7rem,6vw,5.4rem);line-height:.95;letter-spacing:-.075em;margin:18px 0}.hero h1 span{color:var(--purple)}.hero p{font-size:1.08rem;line-height:1.7;color:#6f6b86;max-width:560px}.primary{background:var(--purple);color:white;padding:15px 23px;border-radius:16px;box-shadow:0 5px 0 #4d3db5}.secondary{background:white;color:var(--ink);padding:14px 20px;border-radius:15px;border:2px solid var(--line)}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}.hero-art{position:relative;min-height:350px;border-radius:34px;background:linear-gradient(145deg,#dcd6ff,#fce2ef 62%,#fff0bf);overflow:hidden;display:grid;place-items:center;border:3px solid white;box-shadow:0 15px 0 #e8e2ff}.cloud{position:absolute;width:110px;height:36px;border-radius:30px;background:#fff9;top:34px;left:28px}.cloud:after,.cloud:before{content:"";position:absolute;background:inherit;border-radius:50%;width:42px;height:42px;top:-17px;left:20px}.cloud:after{left:52px;top:-10px;width:32px;height:32px}.sun{position:absolute;right:35px;top:28px;width:60px;height:60px;background:var(--yellow);border-radius:50%;box-shadow:0 0 0 10px #ffd16644}.building{position:absolute;bottom:0;width:75%;height:150px;background:#fff9f0;border:4px solid #8d82d8;border-bottom:0;border-radius:18px 18px 0 0;display:flex;justify-content:space-evenly;align-items:end;padding:15px 15px 0}.building:before{content:"";position:absolute;top:-36px;left:-10px;right:-10px;height:38px;background:#ff8eb6;clip-path:polygon(0 100%,50% 0,100% 100%);border-radius:8px}.window{width:36px;height:50px;background:#8edaff;border:4px solid #8d82d8;border-radius:8px 8px 0 0}.door{width:43px;height:74px;background:#ffc857;border:4px solid #8d82d8;border-radius:12px 12px 0 0}.mascot{position:absolute;z-index:2;font-size:82px;filter:drop-shadow(0 7px 0 #c5b7e8);animation:bob 2.2s ease-in-out infinite}.mascot.one{left:12%;bottom:88px}.mascot.two{right:12%;bottom:75px;animation-delay:.7s}@keyframes bob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-12px) rotate(3deg)}}
+.section-title{text-align:center;margin:18px 0 26px}.section-title h2{font-size:clamp(1.8rem,4vw,2.7rem);letter-spacing:-.05em;margin:0 0 8px}.section-title p{color:#77718e;margin:0}.features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:48px}.feature{background:white;border:2px solid var(--line);border-radius:22px;padding:22px}.feature .emoji{font-size:30px}.feature h3{margin:12px 0 7px}.feature p{color:#77718e;line-height:1.55;margin:0;font-size:.94rem}.outcome{display:grid;grid-template-columns:.7fr 1.3fr;gap:20px;background:#292448;color:white;border-radius:28px;padding:27px;margin-bottom:50px;align-items:center}.outcome h2{margin:0;font-size:1.8rem;letter-spacing:-.04em}.outcome p{color:#d4d0ed;line-height:1.6;margin:0}.pill-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.pill{background:#ffffff18;border:1px solid #ffffff22;padding:7px 11px;border-radius:99px;font-size:.82rem;font-weight:800}
+.game-shell{display:none;padding:12px 0 60px}.game-shell.active{display:block}.home.hidden{display:none}.game-head{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:15px}.game-head h2{margin:0;font-size:1.6rem}.stat-row{display:flex;gap:8px;flex-wrap:wrap}.stat{background:white;border:2px solid var(--line);border-radius:13px;padding:9px 13px;font-weight:900;font-size:.9rem}.stat b{color:var(--purple)}.game-layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:16px}.arena-card{background:white;border:2px solid var(--line);border-radius:24px;padding:16px;min-width:0}.question-box{background:#f0edff;border-radius:18px;padding:16px 18px;margin-bottom:12px}.q-top{display:flex;justify-content:space-between;gap:10px;color:#7168aa;font-size:.8rem;font-weight:900;text-transform:uppercase;letter-spacing:.07em}.question-box h3{margin:8px 0 0;font-size:clamp(1.1rem,2.4vw,1.5rem);line-height:1.3}.arena{position:relative;height:360px;border-radius:20px;overflow:hidden;background:linear-gradient(#c8edff 0%,#e8f8ff 60%,#b4f0d6 60%,#8be0b9 100%);border:2px solid #d6f1ff;isolation:isolate}.arena:before{content:"";position:absolute;left:-5%;right:-5%;height:80px;bottom:0;background:#77d5a7;clip-path:polygon(0 30%,20% 5%,40% 30%,63% 0,82% 25%,100% 8%,100% 100%,0 100%);z-index:-1}.arena:after{content:"";position:absolute;width:100%;height:18px;bottom:0;background:#5fc28e;z-index:-1}.arena-hint{position:absolute;left:14px;bottom:12px;font-size:.75rem;color:#397a68;font-weight:900}.target{position:absolute;min-width:115px;max-width:180px;min-height:66px;padding:10px 12px;border:3px solid white;border-radius:18px;background:#fff7d8;color:#342b61;box-shadow:0 5px 0 #d7b86e;display:flex;align-items:center;gap:8px;justify-content:center;text-align:left;line-height:1.15;animation:floaty 2.5s ease-in-out infinite;z-index:3}.target:nth-of-type(2n){background:#ffe0ed;box-shadow:0 5px 0 #e6a6c1}.target:nth-of-type(3n){background:#d8f8ed;box-shadow:0 5px 0 #8dcbb7}.target .target-icon{font-size:25px;flex-shrink:0}.target .target-text{font-size:.84rem;font-weight:900}.target:hover{transform:scale(1.06);filter:brightness(1.04)}.target:disabled{cursor:default;opacity:.65}.target.correct{outline:4px solid #34bd8b}.target.wrong{outline:4px solid #ff6f91;animation:shake .25s}@keyframes floaty{0%,100%{translate:0 0}50%{translate:0 -8px}}@keyframes shake{25%{translate:-5px 0}75%{translate:5px 0}}.rival{position:absolute;right:12px;bottom:22px;font-size:49px;transition:transform .25s;z-index:2}.rival.hit{transform:rotate(20deg) scale(.7);opacity:.3}.player{position:absolute;left:15px;bottom:20px;font-size:48px;z-index:2}.beam{position:absolute;left:64px;bottom:60px;height:5px;background:#ff7ba7;transform-origin:left center;border-radius:8px;z-index:4;box-shadow:0 0 12px #ff7ba7}.arena-footer{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-top:12px;color:#77718e;font-size:.85rem}.side-card{background:white;border:2px solid var(--line);border-radius:24px;padding:18px;height:fit-content}.side-card h3{margin:0 0 12px}.side-card p{color:#77718e;line-height:1.5;font-size:.9rem}.power-meter{height:12px;background:#efedfa;border-radius:99px;overflow:hidden;margin:10px 0}.power-meter span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--pink),var(--yellow));border-radius:99px;transition:width .3s}.side-line{display:flex;justify-content:space-between;font-weight:900;font-size:.88rem;margin:10px 0}.tiny{font-size:.8rem;color:#88819e}.restart{margin-top:12px;width:100%;background:#f0edff;color:#5749bc;padding:12px;border-radius:13px}.sound-toggle{margin-top:8px;width:100%;background:#fff0c2;color:#6c4b00;padding:12px;border-radius:13px;border:2px solid #ffe39a}.difficulty{width:100%;padding:11px;border:2px solid var(--line);border-radius:12px;background:white;color:var(--ink);font-weight:800;margin:7px 0 12px}.message{min-height:26px;font-weight:900;color:#5a4ac2;margin-top:10px}.feedback{margin-top:10px;background:#f8f6ff;border-radius:13px;padding:12px;color:#5e587b;font-size:.86rem;line-height:1.45}.overlay{position:absolute;inset:0;background:#282344dd;z-index:10;display:none;place-items:center;padding:20px;text-align:center;color:white}.overlay.show{display:grid}.overlay-panel{max-width:380px}.overlay h2{font-size:2rem;margin:0 0 8px}.overlay p{color:#e1def5;line-height:1.5}.overlay button{margin:5px}.footer{text-align:center;color:#938ca8;padding:0 0 30px;font-size:.82rem}.progress-track{height:8px;background:#efedfa;border-radius:99px;overflow:hidden;margin-top:8px}.progress-track span{display:block;height:100%;width:0;background:var(--purple);transition:width .3s}
+@media(max-width:800px){.hero{grid-template-columns:1fr;padding-top:20px}.hero-art{min-height:290px}.features{grid-template-columns:1fr}.outcome{grid-template-columns:1fr}.game-layout{grid-template-columns:1fr}.side-card{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}.side-card h3,.side-card .tiny,.side-card .restart{grid-column:1/-1}.arena{height:390px}.game-head{align-items:flex-start;flex-direction:column}}
+@media(max-width:480px){.wrap{padding:0 14px}.hero h1{font-size:3.1rem}.arena{height:410px}.target{min-width:100px;max-width:145px;padding:8px}.target .target-text{font-size:.75rem}.target .target-icon{font-size:20px}.arena-card{padding:10px}.side-card{grid-template-columns:1fr}.side-card>*{grid-column:1/-1}.nav-tag{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="nav">
+    <div class="brand"><span class="logo">🏗️</span> BuildA</div>
+    <div class="nav-tag">BUILD SMART · PLAY BRAVE</div>
+  </header>
+
+  <main class="home" id="home">
+    <section class="hero">
+      <div>
+        <span class="eyebrow">🎮 Construction learning arcade</span>
+        <h1>Build your<br>knowledge.<br><span>Blast your way!</span></h1>
+        <p>Learn the basics of floor, wall, ceiling and roof construction in a colorful five-minute target game. Aim carefully, answer correctly, power up and outsmart the rival bots!</p>
+        <div class="hero-actions">
+          <button class="primary" id="playBtn">▶ Play BuildA</button>
+          <button class="secondary" id="howBtn">How to play ↓</button>
+        </div>
+      </div>
+      <div class="hero-art" aria-label="Cute cartoon building illustration">
+        <div class="cloud"></div><div class="sun"></div>
+        <div class="building"><div class="window"></div><div class="window"></div><div class="door"></div><div class="window"></div></div>
+        <div class="mascot one">🧑‍🔧</div><div class="mascot two">🤖</div>
+      </div>
+    </section>
+
+    <section id="how">
+      <div class="section-title"><h2>How to play</h2><p>Every correct answer powers your blaster.</p></div>
+      <div class="features">
+        <article class="feature"><div class="emoji">🎯</div><h3>1. Aim at an answer</h3><p>Read the question above the arena. Click or tap the moving target that shows the answer you believe is correct.</p></article>
+        <article class="feature"><div class="emoji">⚡</div><h3>2. Power up</h3><p>A correct answer earns points and energy. Your blaster uses that power to tag a rival bot. Wrong answers cost a little energy—try again!</p></article>
+        <article class="feature"><div class="emoji">🏆</div><h3>3. Win the round</h3><p>Answer all 10 questions before time runs out. Build a streak for bonus points and see your final score and learning feedback.</p></article>
+      </div>
+      <div class="outcome">
+        <div><h2>What you'll learn</h2><div class="pill-row"><span class="pill">Floor</span><span class="pill">Walls</span><span class="pill">Ceilings</span><span class="pill">Roofs</span></div></div>
+        <div><p><strong>Learning outcome:</strong> Identify the purpose, basic components and common materials used in floor, wall, ceiling and roof construction. Designed for beginners and first-year Diploma in Interior Design students.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <section class="game-shell" id="game">
+    <div class="game-head">
+      <div><div class="eyebrow">🏗️ BuildA arena</div><h2>Construction Blaster</h2></div>
+      <div class="stat-row">
+        <div class="stat">⏱ <b id="timeStat">05:00</b></div>
+        <div class="stat">⭐ <b id="scoreStat">0</b> pts</div>
+        <div class="stat">📘 <b id="questionStat">1/10</b></div>
+      </div>
+    </div>
+    <div class="game-layout">
+      <div class="arena-card">
+        <div class="question-box">
+          <div class="q-top"><span id="category">FLOOR CONSTRUCTION</span><span id="difficultyLabel">EASY</span></div>
+          <h3 id="question">Loading question…</h3>
+          <div class="progress-track"><span id="progressBar"></span></div>
+        </div>
+        <div class="arena" id="arena">
+          <div class="player" aria-label="Your character">🧑‍🔧</div>
+          <div class="rival" id="rival" aria-label="Rival robot">🤖</div>
+          <div class="arena-hint">TAP THE BEST ANSWER TARGET!</div>
+          <div class="overlay" id="overlay"><div class="overlay-panel"><h2 id="overlayTitle">Ready?</h2><p id="overlayText">Pick the correct answer to power up.</p><button class="primary" id="overlayBtn">Start round</button><button class="secondary" id="homeBtn">Back to home</button></div></div>
+        </div>
+        <div class="arena-footer"><span>🖱️ Click / tap an answer target</span><span id="streakStat">🔥 Streak: 0</span></div>
+        <div class="message" id="message" role="status" aria-live="polite"></div>
+        <div class="feedback" id="feedback">Tip: Think about what each building element does before choosing.</div>
+      </div>
+      <aside class="side-card">
+        <h3>🧰 Your tool kit</h3>
+        <div class="side-line"><span>Blaster energy</span><span id="energyText">3 / 5</span></div>
+        <div class="power-meter"><span id="energyBar"></span></div>
+        <div class="side-line"><span>Rival bots tagged</span><span id="hitsText">0 / 10</span></div>
+        <p>Correct answers add energy and tag a rival. Build a streak for bonus points. Your energy is a game resource—not a grade.</p>
+        <label for="difficulty" class="tiny"><strong>Choose difficulty</strong></label>
+        <select class="difficulty" id="difficulty">
+          <option value="easy">Easy — slower targets</option>
+          <option value="medium">Medium — quicker targets</option>
+          <option value="hard">Hard — fast targets</option>
+        </select>
+        <div class="tiny">A round lasts up to five minutes. Difficulty changes target movement and scoring, not the learning content.</div>
+        <button class="sound-toggle" id="soundBtn" aria-pressed="true">🔊 Sound: On</button>
+        <button class="restart" id="restartBtn">↻ Restart round</button>
+      </aside>
+    </div>
+  </section>
+  <footer class="footer">BuildA · Building Construction · Learn the structure behind every space.</footer>
+</div>
+<script>
+(() => {
+  const questions = [
+    {cat:"Floor construction",q:"Which part of a floor provides a flat, usable walking surface?",a:["Floor finish","Roof truss","Wall tie"],correct:0,why:"A floor finish is the exposed surface, such as tile, timber, vinyl or carpet."},
+    {cat:"Floor construction",q:"What is a common purpose of a floor screed?",a:["To support roof tiles","To create a level base","To ventilate a room"],correct:1,why:"A screed creates a smooth, level layer that can receive a floor finish."},
+    {cat:"Floor construction",q:"Which material is commonly used for a structural concrete floor slab?",a:["Paperboard","Fabric","Reinforced concrete"],correct:2,why:"Reinforced concrete combines concrete with steel reinforcement to resist loads."},
+    {cat:"Wall construction",q:"What is one main function of an external wall?",a:["Separate inside from outside","Collect rainwater only","Support furniture only"],correct:0,why:"External walls enclose a building and help protect it from weather."},
+    {cat:"Wall construction",q:"Which item is commonly used to build a masonry wall?",a:["Glass wool only","Bricks or concrete blocks","Roof felt only"],correct:1,why:"Bricks and concrete blocks are common masonry wall units, usually joined with mortar."},
+    {cat:"Wall construction",q:"What is the purpose of a lintel above a door or window opening?",a:["Decorate the ceiling","Finish the floor","Support the wall above the opening"],correct:2,why:"A lintel spans an opening and transfers loads to the sides."},
+    {cat:"Ceiling construction",q:"A suspended ceiling is usually hung from what?",a:["A supporting frame or structure above","The floor finish","Window glass"],correct:0,why:"A suspended ceiling uses hangers and a framework fixed to the structure above."},
+    {cat:"Ceiling construction",q:"Which material is commonly used for lightweight ceiling boards?",a:["Roof clay only","Gypsum board","Paving blocks"],correct:1,why:"Gypsum board is widely used for smooth, lightweight interior ceilings."},
+    {cat:"Roof construction",q:"What is the main job of a roof covering?",a:["Level the floor","Hold interior doors","Help shed rain and protect the building"],correct:2,why:"Roof coverings such as tiles or metal sheets form the weather-facing layer."},
+    {cat:"Roof construction",q:"What is the purpose of a roof truss or rafter system?",a:["Support the roof covering and transfer loads","Polish the wall","Cover electrical sockets"],correct:0,why:"Trusses and rafters support roof layers and transfer loads to the building structure."}
+  ];
+  const $ = id => document.getElementById(id);
+  const home = $("home"), game = $("game"), arena = $("arena");
+  let order=[], current=0, score=0, energy=3, hits=0, streak=0, timeLeft=300, timer=null, running=false, answered=false, targetTimers=[];
+  let soundOn=true, audioCtx=null;
+  function tone(freq, duration=.12, type="sine", volume=.055, delay=0){
+    if(!soundOn)return;
+    try{
+      const Ctx=window.AudioContext||window.webkitAudioContext;
+      if(!Ctx)return;
+      if(!audioCtx)audioCtx=new Ctx();
+      if(audioCtx.state==="suspended")audioCtx.resume();
+      const osc=audioCtx.createOscillator(), gain=audioCtx.createGain();
+      osc.type=type;osc.frequency.setValueAtTime(freq,audioCtx.currentTime+delay);
+      gain.gain.setValueAtTime(.0001,audioCtx.currentTime+delay);
+      gain.gain.exponentialRampToValueAtTime(volume,audioCtx.currentTime+delay+.015);
+      gain.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+delay+duration);
+      osc.connect(gain);gain.connect(audioCtx.destination);osc.start(audioCtx.currentTime+delay);osc.stop(audioCtx.currentTime+delay+duration+.03);
+    }catch(e){}
+  }
+  function playSound(kind){
+    if(kind==="shoot"){tone(520,.07,"square",.035);tone(260,.09,"triangle",.025,.035);}
+    if(kind==="correct"){tone(660,.12,"sine",.06);tone(880,.16,"sine",.06,.11);tone(1100,.2,"sine",.05,.22);}
+    if(kind==="wrong"){tone(220,.18,"sawtooth",.035);tone(165,.22,"sawtooth",.03,.13);}
+    if(kind==="win"){[523,659,784,1047].forEach((f,i)=>tone(f,.22,"sine",.06,i*.13));}
+    if(kind==="time"){tone(440,.08,"square",.035);tone(330,.12,"square",.03,.1);}
+  }
+  const clamp=(n,min,max)=>Math.max(min,Math.min(max,n));
+  const shuffle=a=>{const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;};
+  function clearTargets(){targetTimers.forEach(clearInterval);targetTimers=[];arena.querySelectorAll(".target,.beam").forEach(e=>e.remove());}
+  function showOverlay(title,desc,buttonText,callback){$("overlayTitle").textContent=title;$("overlayText").textContent=desc;$("overlayBtn").textContent=buttonText;$("overlay").classList.add("show");$("overlayBtn").onclick=callback;}
+  function start(){home.classList.add("hidden");game.classList.add("active");resetRound();$("overlay").classList.remove("show");running=true;renderQuestion();timer=setInterval(()=>{if(!running)return;timeLeft--;updateStats();if(timeLeft<=0)finish(false);},1000);}
+  function resetRound(){if(timer)clearInterval(timer);clearTargets();order=shuffle(questions);current=0;score=0;energy=3;hits=0;streak=0;timeLeft=300;running=false;answered=false;$("message").textContent="";$("feedback").textContent="Tip: Think about what each building element does before choosing.";$("rival").classList.remove("hit");updateStats();}
+  function updateStats(){
+    $("timeStat").textContent=String(Math.floor(timeLeft/60)).padStart(2,"0")+":"+String(timeLeft%60).padStart(2,"0");
+    $("scoreStat").textContent=score;$("questionStat").textContent=Math.min(current+1,10)+"/10";
+    $("streakStat").textContent="🔥 Streak: "+streak;$("energyText").textContent=energy+" / 5";
+    $("energyBar").style.width=(energy/5*100)+"%";$("hitsText").textContent=hits+" / 10";
+    $("progressBar").style.width=(current/10*100)+"%";
+  }
+  function renderQuestion(){
+    clearTargets();answered=false;
+    if(current>=10){finish(true);return;}
+    const q=order[current],diff=$("difficulty").value;
+    $("category").textContent=q.cat;$("difficultyLabel").textContent=diff.toUpperCase();
+    $("question").textContent=(current+1)+". "+q.q;
+    $("message").textContent="";$("feedback").textContent="Choose one of the moving answer targets.";
+    const shuffled=q.a.map((text,i)=>({text,original:i})).sort(()=>Math.random()-.5);
+    const bounds=arena.getBoundingClientRect();const positions=[
+      {x:8,y:18},{x:56,y:18},{x:31,y:52}
+    ];
+    shuffled.forEach((answer,i)=>{
+      const btn=document.createElement("button");btn.className="target";btn.type="button";
+      btn.innerHTML='<span class="target-icon">'+["🧱","🪵","🛠️"][i]+'</span><span class="target-text"></span>';
+      btn.querySelector(".target-text").textContent=answer.text;
+      btn.dataset.correct=answer.original===q.correct?"yes":"no";
+      btn.style.left=positions[i].x+"%";btn.style.top=positions[i].y+"%";
+      btn.setAttribute("aria-label","Shoot answer: "+answer.text);
+      btn.addEventListener("click",()=>shoot(btn,q));
+      arena.appendChild(btn);
+      const speed=diff==="easy"?1900:diff==="medium"?1300:850;
+      const interval=setInterval(()=>{
+        if(!running||answered||!btn.isConnected)return;
+        const maxX=Math.max(0,arena.clientWidth-btn.offsetWidth-8);
+        const maxY=Math.max(10,arena.clientHeight-btn.offsetHeight-35);
+        btn.style.left=Math.floor(Math.random()*maxX)+"px";
+        btn.style.top=Math.floor(Math.random()*maxY)+"px";
+      },speed+Math.random()*300);
+      targetTimers.push(interval);
+    });
+    updateStats();
+  }
+  function shoot(btn,q){
+    if(!running||answered)return;
+    answered=true;playSound("shoot");
+    const isCorrect=btn.dataset.correct==="yes";
+    const beam=document.createElement("div");beam.className="beam";
+    const ar=arena.getBoundingClientRect(),tr=btn.getBoundingClientRect();
+    const sx=58,sy=ar.height-62,tx=tr.left-ar.left+tr.width/2,ty=tr.top-ar.top+tr.height/2;
+    const len=Math.hypot(tx-sx,ty-sy),angle=Math.atan2(ty-sy,tx-sx)*180/Math.PI;
+    beam.style.width=len+"px";beam.style.transform=`rotate(${angle}deg)`;arena.appendChild(beam);
+    if(isCorrect){
+      playSound("correct");
+      streak++;energy=clamp(energy+1,0,5);
+      const diff=$("difficulty").value;score+=(diff==="easy"?100:diff==="medium"?125:150)+(streak>1?streak*10:0);
+      hits++;$("rival").classList.add("hit");
+      btn.classList.add("correct");$("message").textContent="⚡ Direct hit! Correct answer — rival tagged!";
+      $("feedback").textContent="Correct! "+q.why;
+    }else{
+      playSound("wrong");
+      streak=0;energy=clamp(energy-1,0,5);score=Math.max(0,score-20);
+      btn.classList.add("wrong");$("message").textContent="💫 Not quite! -20 points. Try the next one.";
+      $("feedback").textContent="The correct answer is “"+q.a[q.correct]+"”. "+q.why;
+    }
+    updateStats();
+    setTimeout(()=>{
+      if(!running)return;
+      current++;
+      if(energy===0){energy=1;$("message").textContent+=" Recharged with a tiny safety boost!";}
+      if(current>=10){finish(true);}else renderQuestion();
+    },1250);
+  }
+  function finish(completed){
+    if(running && completed)playSound("win");
+    else if(running && !completed)playSound("time");
+    running=false;if(timer)clearInterval(timer);clearTargets();$("overlay").classList.add("show");
+    const won=completed&&hits>=7;
+    $("overlayTitle").textContent=completed?(won?"🏆 Builder Champion!":"🎓 Round Complete!"):"⏰ Time's up!";
+    $("overlayText").textContent=`You scored ${score} points and answered ${current} of 10 questions. You tagged ${hits} rival bots. ${hits>=7?"Great construction knowledge!":"Review the explanations and try another round to improve your score."}`;
+    $("overlayBtn").textContent="Play again";$("overlayBtn").onclick=()=>{resetRound();$("overlay").classList.remove("show");running=true;renderQuestion();timer=setInterval(()=>{if(!running)return;timeLeft--;updateStats();if(timeLeft<=0)finish(false);},1000);};
+    $("progressBar").style.width=(current/10*100)+"%";updateStats();
+  }
+  $("playBtn").addEventListener("click",()=>{start();});
+  $("howBtn").addEventListener("click",()=>{$("how").scrollIntoView({behavior:"smooth"});});
+  $("overlayBtn").addEventListener("click",()=>{});
+  $("homeBtn").addEventListener("click",()=>{if(timer)clearInterval(timer);running=false;clearTargets();game.classList.remove("active");home.classList.remove("hidden");$("overlay").classList.remove("show");window.scrollTo({top:0,behavior:"smooth"});});
+  $("restartBtn").addEventListener("click",()=>{resetRound();running=true;$("overlay").classList.remove("show");renderQuestion();timer=setInterval(()=>{if(!running)return;timeLeft--;updateStats();if(timeLeft<=0)finish(false);},1000);});
+  $("difficulty").addEventListener("change",()=>{if(running&&!answered)renderQuestion();});
+  $("soundBtn").addEventListener("click",()=>{
+    soundOn=!soundOn;
+    $("soundBtn").textContent=soundOn?"🔊 Sound: On":"🔇 Sound: Off";
+    $("soundBtn").setAttribute("aria-pressed",String(soundOn));
+    if(soundOn)playSound("correct");
+  });
+  showOverlay("Ready, builder?","Answer 10 construction questions, collect power and tag the rival bots. You have five minutes!","Start round",()=>{start();});
+})();
+</script>
+</body>
+</html>
